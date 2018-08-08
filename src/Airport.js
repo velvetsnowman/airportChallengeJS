@@ -4,6 +4,14 @@ var Airport = function(){
 
 }
 
+Airport.prototype.changeCapacity = function(capacity){
+  this.capacity = capacity;
+};
+
+Airport.prototype.viewCapacity = function(){
+  return this.capacity;
+};
+
 Airport.prototype.land = function(plane){
   if (this.generateWeather() === "Stormy") {throw Error("Weather conditions are unsatisfactory for landing");}
   if (this.hangar.length >= this.capacity) {throw Error("Airport capacity reached, can not land plane");}

@@ -8,6 +8,13 @@ describe("Airport", function(){
     airport = new Airport();
   });
 
+  describe("Capacity", function(){
+    it("lets you change the capacity", function() {
+      airport.changeCapacity(4);
+      expect(airport.viewCapacity()).toEqual(4);
+    });
+  });
+
   describe("landing a plane", function() {
     it("adds a plane to the hangar", function() {
       airport.land(plane);
