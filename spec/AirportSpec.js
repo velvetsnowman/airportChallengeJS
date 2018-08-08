@@ -9,24 +9,37 @@ describe("Airport", function(){
   });
 
   describe("landing a plane", function() {
-    it("adds plane to hangar", function() {
+    it("adds a plane to the hangar", function() {
       airport.land(plane);
       expect(airport.hangar).toContain(plane);
+    });
+    it("doesnt allow landing if weather is stormy", function() {
+      spyOn(airport, 'generateWeather').and.returnValue('Stormy');
+      expect( function() {airport.land(plane);}).toThrowError("Weather conditions are unsatisfactory for landing");
+    });
+    it("doesnt allow landing if capacity is reached", function() {
+      spyOn(airport, 'generateWeather').and.returnValue('Sunny');
+      airport.land(plane);
+      airport.land(plane);
+      airport.land(plane);
+      airport.land(plane);
+      airport.land(plane);
+      expect( function() {airport.land(plane);}).toThrowError("Airport capacity reached, can not land plane");
     });
   });
 
   describe("takeoff", function() {
-    it("makes a plane depart from the airport", function() {
+    it("will allow a plane depart from the airport", function() {
       airport.land(plane);
       airport.takeoff(plane);
       expect(airport.hangar).not.toContain(plane);
     });
 
-    it('throws an error if plane is not in hangar', function(){
+    it('throws an error if plane has not landed', function(){
       expect( function() {airport.takeoff(plane);}).toThrowError("Plane is not in airport");
     });
 
-    it('will not let a plane take off if weather is stormy', function(){
+    it('will NOT allow a plane take off if weather is stormy', function(){
       airport.land(plane);
       spyOn(airport, 'generateWeather').and.returnValue('Stormy');
       expect( function() {airport.takeoff(plane);}).toThrowError("Weather conditions are unsatisfactory for takeoff");
