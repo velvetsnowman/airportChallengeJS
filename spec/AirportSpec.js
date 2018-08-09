@@ -36,7 +36,7 @@ describe("Airport", function(){
   });
 
   describe("takeoff", function() {
-    it("will allow a plane depart from the airport", function() {
+    it("will allow a plane to takeoff from the airport", function() {
       airport.land(plane);
       airport.takeoff(plane);
       expect(airport.hangar).not.toContain(plane);
@@ -46,7 +46,7 @@ describe("Airport", function(){
       expect( function() {airport.takeoff(plane);}).toThrowError("Plane is not in airport");
     });
 
-    it('will NOT allow a plane take off if weather is stormy', function(){
+    it('will NOT allow a plane to take off if weather is stormy', function(){
       airport.land(plane);
       spyOn(airport, 'generateWeather').and.returnValue('Stormy');
       expect( function() {airport.takeoff(plane);}).toThrowError("Weather conditions are unsatisfactory for takeoff");
